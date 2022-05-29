@@ -291,6 +291,6 @@ def get_db_string(config):
 
 
 def create_db_session(db_string):
-    db_engine = create_engine(db_string, echo=False)
+    db_engine = create_engine(db_string, echo=True)
     Session = sessionmaker(db_engine)
     return Session(), db_engine
