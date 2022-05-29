@@ -1,0 +1,6 @@
+frontend/app/node_modules
+frontend/app/build
+frontend/app/.eslintcache
+data
+__pycache__
+.vscode

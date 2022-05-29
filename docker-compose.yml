@@ -1,0 +1,62 @@
+services:
+  backend:
+    container_name: arxiv-dispenser-backend
+    build:
+      context: ./backend
+      dockerfile: ./docker/backend/Dockerfile
+    depends_on:
+      - postgres
+    image: cmeyr/arxiv-dispenser-backend
+    environment:
+      - CONFIG_PATH=/config/config.yaml
+    volumes:
+      - $PWD/config:/config
+      - $PWD/data:/data
+    command:
+      - "gunicorn"
+      - "--capture-output"
+      - "--workers=${GUNICORN_WORKERS}"
+      - "--threads=${GUNICORN_WORKER_THREADS}"
+      - "--timeout=${TIMEOUT_SEC}"
+      - "--log-level=${LOG_LEVEL}"
+      - "--bind=0.0.0.0:8000"
+      - "api:app"
+
+  postgres:
+    container_name: arxiv-dispenser-postgres
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - $PWD/data/postgres:/var/lib/postgresql/data
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_buffers=512MB"
+
+  paper_fetcher:
+    container_name: arxiv-dispenser-fetcher
+    build:
+      context: ./backend
+      dockerfile: ./docker/paper_fetcher/Dockerfile
+    depends_on:
+      - postgres
+    image: cmeyr/arxiv-dispenser-paper-fetcher
+    environment:
+      - CONFIG_PATH=/config/config.yaml
+    volumes:
+      - $PWD/config:/config
+      - $PWD/data:/data
+
+  frontend:
+    container_name: arxiv-dispenser-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./docker/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - ${FRONTEND_PORT}:80
+      - ${FRONTEND_PORT_TLS}:443
+    volumes:
+      - $PWD/config/certs:/etc/nginx/certs

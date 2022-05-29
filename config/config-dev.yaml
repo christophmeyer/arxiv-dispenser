@@ -1,0 +1,35 @@
+# config to be used for running backend outside of docker for development
+
+# credentials and plumbing
+secret_key: w5UwODzv7U3SgRP7TIzqNyY2ghdwhWvkfg1aMsehg9M=
+db_password: mysecretpassword
+db_host: localhost
+db_port: 5432
+backend: 'localhost:5000'
+
+# data storage params
+metadata_dir: ../../data/papers_metadata
+full_text_dir: ../../data/papers_full_text
+affiliations_path: ../../config/sample_affiliations.yaml
+tfidf_dir: ../../data/tfidf
+
+# paper fetch parameters
+daily_fetch_time: '04:00'
+papers_per_request: 7
+arxiv_base_url: 'http://export.arxiv.org'
+categories:
+  - cs.LG
+  - stat.ML
+  - cs.AI
+  - cs.CV
+  - cs.CL
+  - cs.IR
+  - cs.NE
+  - cs.SD
+  - eess.AS
+  - eess.IV
+  - eess.SP
+
+# search query parameters
+max_queries_cache: 10
+max_search_results: 500

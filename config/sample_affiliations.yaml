@@ -1,0 +1,56 @@
+- name: University of Toronto
+  patterns:
+    - max_l_dist: 2
+      text: University of Toronto
+- name: Nvidia
+  patterns:
+    - max_l_dist: 0
+      text: '@nvidia.com'
+- name: Google
+  patterns:
+    - max_l_dist: 0
+      text: '@google.com'
+    - max_l_dist: 0
+      text: Google Research
+    - max_l_dist: 0
+      text: Google Brain
+- name: Meta AI
+  patterns:
+    - max_l_dist: 2
+      text: Facebook AI Research
+    - max_l_dist: 2
+      text: Meta AI
+    - max_l_dist: 0
+      text: '@fb.com'
+- name: Open AI
+  patterns:
+    - max_l_dist: 0
+      text: ' OpenAI '
+    - max_l_dist: 0
+      text: '@openai.com'
+- name: Amazon
+  patterns:
+    - max_l_dist: 0
+      text: '@amazon.com'
+- name: DeepMind
+  patterns:
+    - max_l_dist: 0
+      text: '@deepmind.com'
+- name: Microsoft
+  patterns:
+    - max_l_dist: 0
+      text: '@microsoft.com'
+    - max_l_dist: 2
+      text: Microsoft Research
+- name: Oxford
+  patterns:
+    - max_l_dist: 0
+      text: University of Oxford
+    - max_l_dist: 0
+      text: ox.ac.uk
+- name: Stanford
+  patterns:
+    - max_l_dist: 0
+      text: '@stanford.edu'
+    - max_l_dist: 0
+      text: Stanford University
