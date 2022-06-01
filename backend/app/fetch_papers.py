@@ -244,7 +244,7 @@ def initialize_tables(config):
         try:
             Base.metadata.create_all(db_engine)
             tables_created = True
-        except:
+        except Exception as e:
             time.sleep(10)
 
     with open(config.affiliations_path) as file:

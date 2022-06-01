@@ -21,8 +21,9 @@ def convert_pdf_to_text_pkl(paper_pdf_path, full_text_file_path):
     with open(os.path.join(paper_pdf_path), 'rb') as file:
         try:
             paper_pdf = pdftotext.PDF(file)
-        except:
-            logger.info('Could not read {}'.format(paper_pdf_path))
+        except Exception as e:
+            logger.error('Could not read {}'.format(paper_pdf_path))
+            logger.error(e, exc_info=True)
             paper_pdf = ['']
 
     with open(full_text_file_path, 'wb') as file:

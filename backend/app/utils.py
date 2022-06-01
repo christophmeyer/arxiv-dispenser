@@ -106,7 +106,7 @@ def download_paper(arxiv_base_url, paper_id, pdf_path):
         try:
             resp = requests.get(pdf_url)
             is_downloaded = True
-        except:
+        except Exception as e:
             time.sleep(10)
 
     with open(pdf_path, 'wb') as file:

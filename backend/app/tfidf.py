@@ -47,8 +47,13 @@ class FullTextDataset():
             if counter % 1000 == 0:
                 logger.info('Processing {}/{}'.format(counter,
                                                       len(self.file_paths)))
-            with open(file_path, 'rb') as file:
-                paper_pdf = pickle.load(file)
+            try:
+                with open(file_path, 'rb') as file:
+                    paper_pdf = pickle.load(file)
+            except Exception as e:
+                logger.error('Could not read {}'.format(file_path))
+                logger.error(e, exc_info=True)
+                continue
 
             raw_text = ' '.join(list(paper_pdf))
             processed_text = re.sub(r'[^a-zA-Z0-9_\s]', '',

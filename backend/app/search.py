@@ -97,7 +97,7 @@ class TfidfSearch():
         else:
             try:
                 paper_pos = self.ids.index(paper_id)
-            except:
+            except Exception as e:
                 return []
 
             paper_vector = self.transformed[paper_pos]

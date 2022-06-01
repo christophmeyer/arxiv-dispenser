@@ -2,6 +2,7 @@ import os
 import pickle
 import hashlib
 import uuid
+import logging
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, String, Table, PickleType, BigInteger, ForeignKey
@@ -12,6 +13,8 @@ from sqlalchemy import or_
 from utils import (download_paper, extract_affiliations,
                    time_filter_to_unix_timestamp)
 from paper_processing import convert_pdf_to_text_pkl, paper_id_to_file_name
+
+logger = logging.getLogger(__name__)
 
 Base = declarative_base()
 
@@ -247,8 +250,13 @@ class Paper(Base):
 
     def extract_affiliation(self, affiliations, full_text_file_path,
                             db_session):
-        with open(full_text_file_path, 'rb') as file:
-            papers_txt = pickle.load(file)
+        try:
+            with open(full_text_file_path, 'rb') as file:
+                papers_txt = pickle.load(file)
+        except Exception as e:
+            logger.error('Could not read {}'.format(full_text_file_path))
+            logger.error(e, exc_info=True)
+            return
 
         for organization_name in extract_affiliations(papers_txt[0],
                                                       affiliations):
